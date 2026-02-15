@@ -46,16 +46,16 @@ end;
 // 1. Drop TCROServiceManager on form
 // 2. Set OperationForInsert to 'SaveCustomer'
 // 3. Bind controls via Expression property:
-//    - CROEdit1.Expression = 'Customer.Name'
-//    - CROEdit2.Expression = 'Customer.Email'
-// 4. Add CROButton with action = oaInsert
+//    - TCROEdit1.Expression = 'Customer.Name'
+//    - TCROEdit2.Expression = 'Customer.Email'
+// 4. Add TCROButton with action = oaInsert
 
 // At runtime - just call Execute
 procedure TForm1.Button1Click(Sender: TObject);
 begin
   // UI automatically synced to operation parameters
   // Execute sends data to server
-  CROperation1.Execute;
+  TCROOperation1.Execute;
 end;
 ```
 
@@ -89,8 +89,8 @@ end;
 |---------------------|------------------------|
 | `TClientDataSet` | `TCROListHandle` + `TCROCursorHandle` |
 | `TDataSource` | `TCROProperties` (links control to handle) |
-| `TDBEdit` | `CROEdit` with `Expression` binding |
-| `TDBGrid` | `CROGrid` with column `Expression` |
+| `TDBEdit` | `TCROEdit` with `Expression` binding |
+| `TDBGrid` | `TCROGrid` with column `Expression` |
 | `TDBNavigator` | `TCROOperationExecute` actions |
 | `TTable` / `TQuery` | `TCROOperation` (remote queries) |
 
@@ -154,20 +154,20 @@ UI components bind to cursor handles:
 
 | Component | Base Class | Purpose |
 |-----------|-----------|---------|
-| `CROEdit` | TCustomEdit | Text input bound to cursor fields |
-| `CROGrid` | TCustomGrid | Tabular data with expression columns |
-| `CROComboBox` | TCustomComboBox | Dropdown with data binding |
-| `CROCheckbox` | TCustomCheckbox | Boolean field binding |
-| `CRODateTimePicker` | TDateTimePicker | Date/time field binding |
-| `CROLookupCombo` | TCustomComboBox | Lookup field support |
-| `CROListBox` | TCustomListBox | List selection binding |
-| `CROButton` | TButton | Action triggers |
+| `TCROEdit` | TCustomEdit | Text input bound to cursor fields |
+| `TCROGrid` | TCustomGrid | Tabular data with expression columns |
+| `TCROComboBox` | TCustomComboBox | Dropdown with data binding |
+| `TCROCheckbox` | TCustomCheckbox | Boolean field binding |
+| `TCRODateTimePicker` | TDateTimePicker | Date/time field binding |
+| `TCROLookupCombo` | TCustomComboBox | Lookup field support |
+| `TCROListBox` | TCustomListBox | List selection binding |
+| `TCROButton` | TButton | Action triggers |
 
 Each implements `ICROCustomControl` interface for value synchronization:
 - `UpdateValue` - Refresh UI from cursor data
 - `UpdateObject` - Save UI changes to cursor
 
-### Expression Binding System (`CROComponentsCommon.pas`)
+### Expression Binding System (`CROComponentsCommon.pas` unit)
 
 Property binding via string expressions:
 ```pascal
@@ -200,9 +200,9 @@ TCROOperationExecute (Select/Insert/Update/Delete)
 ### Skin System
 
 Optional visual customization:
-- `CROSkinControl` - Skin update notifications
-- `CROSkinProperties` - Visual property storage
-- `CROSkinImage` - Image-based skins
+- `TCROSkinControl` - Skin update notifications
+- `TCROSkinProperties` - Visual property storage
+- `TCROSkinImage` - Image-based skins
 - `BitmapToRegion` - Transparent image regions
 
 ## Design Patterns
