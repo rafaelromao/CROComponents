@@ -46,16 +46,16 @@ end;
 // 1. Drop TCROServiceManager on form
 // 2. Set OperationForInsert to 'SaveCustomer'
 // 3. Bind controls via Expression property:
-//    - TCROEdit1.Expression = 'Customer.Name'
-//    - TCROEdit2.Expression = 'Customer.Email'
-// 4. Add TCROButton with action = oaInsert
+//    - edit1.Expression = 'Customer.Name'
+//    - edit2.Expression = 'Customer.Email'
+// 4. Add btnSave with action = oaInsert
 
 // At runtime - just call Execute
 procedure TForm1.Button1Click(Sender: TObject);
 begin
   // UI automatically synced to operation parameters
   // Execute sends data to server
-  TCROOperation1.Execute;
+  operation1.Execute;
 end;
 ```
 
@@ -172,8 +172,8 @@ Each implements `ICROCustomControl` interface for value synchronization:
 Property binding via string expressions:
 ```pascal
 // Syntax: ComponentName.PropertyName
-Expression := 'CustomerEdit.Text'  // Binds to CustomerEdit's Text property
-Expression := 'OrderGrid.Data'     // Binds to grid's data source
+Expression := 'editCustomer.Text'  // Binds to editCustomer's Text property
+Expression := 'gridOrders.Data'     // Binds to grid's data source
 ```
 
 Key functions:
