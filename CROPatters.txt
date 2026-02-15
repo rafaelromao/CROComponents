@@ -1,0 +1,91 @@
+Pattern 1 - CRO Dialog Box Pattern - Rafael Romão - 2004-02-03
+------------------------------------------------------------------------------
+This pattern shows the best practice to use CROActions to Execute modal forms.
+------------------------------------------------------------------------------
+
+{ Step 1 - Implement the basic Form }
+-------------------------------------
+
+type
+  TMyForm = class(TForm)                                { At the creation of the Form              }
+  private                                               { Follow the instructions exatly like here }
+    { Private declarations }
+  public
+    { Public declarations }
+    class function Execute: TModalResult;               <- Declare this class method
+  end;
+
+implementation
+
+uses SomeUnit;
+
+var                                                     <- Move MyForm variable inside the implementation Section
+  MyForm: TMyForm;                                         { below the uses clause and     }
+                                                           { upon the {$R *.dfm} directive }
+{$R *.dfm}
+
+{ TMyForm }
+
+class function TMyForm.Execute: TModalResult;           <- Implement the class method exatly like that
+begin                                                      { Do not implement any other code here      }
+  try                                                      { It must be done with the Actions property }
+    MyForm := TMyForm.Create(Application);                 { of the CROAction used to execute this form}
+    Result := MyForm.ShowModal;
+  finally
+    FreeAndNil(MyForm);
+  end;
+end;
+
+-----------------------------
+ {Note 1}
+
+ -> All CROAction components have a property named Actions
+    which provide a list of references to other actions that must be executed
+    just before or after its execution, the execution time is informed by its ExecutionTime property.
+    When the refered action must be executed after its parent execution, the property
+    ExecuteCondiction must be filled with the set of wished ActionExecuteResults
+    that can trigger the execution.
+    For CRO Standard Action, others than TCROAction, there is no OnExecute event
+    and the result is always erOk for successfull execution and erNone when execution
+    be canceled.
+    For non CRO Standard Actions, the execute result must be informed on the Result
+    parameter of the OnExecute event, otherwise it will be always erOk.
+    The available values for this property are directly mapped from TModalResult values.
+
+
+{ Step 2 - Create an Action to execute the form }
+-------------------------------------------------
+
+ -> Create a standard action of the type TCROAction
+ -> Name it MyFormExecuteAction
+ -> Create an OnExecute event to implement the code that will Execute the Form
+ -> Follow exatly this pattern to implemen the OnExecute Event:
+    {
+        procedure TMyMainForm.MyCROActionExecute(Sender: TObject;
+          var Result: TModalResult);
+        begin
+          Result := TMyForm.Execute;
+        end;
+    }
+ -> Use the Action property to set backward and afterward actions
+ -> Call the MyFormExecuteAction when necessary
+
+Pattern 2 - CRO Data Module Handling Pattern - Rafael Romão - 2004-02-03
+--------------------------------------------------------------------------------------
+This pattern shows the best practice to use CROActions to create and free Data Modules
+--------------------------------------------------------------------------------------
+
+ -> Create a TActionList component on a main project data module,
+    Consider to create a data module exclusive for this.
+ -> Insert two TCROAction components on this ActionList for each DataModule of the project
+ -> Name then MyDataModuleCreateAction and MyDataModuleDestroyAction
+ -> Implement the OnExecute for MyDataModuleCreateAction like this
+    {
+      MyDataModule := TMyDataModule.Create;
+    }
+ -> Implement the OnExecute for MyDataModuleDestroyAction like this
+    {
+      FreeAndNil(MyDataModule);
+    }
+ -> Use the Action property to set backward and afterward actions
+ -> Call the MyDataModuleCreateAction and MyDataModuleDestroyAction when necessary

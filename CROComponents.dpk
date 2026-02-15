@@ -1,0 +1,70 @@
+package CROComponents;
+
+{$R *.res}
+{$R 'CROComponents.dcr'}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO ON}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION ON}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO ON}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES OFF}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DESCRIPTION 'CRO Components'}
+{$IMPLICITBUILD OFF}
+
+requires
+  rtl,
+  RemObjects_Core_D7,
+  designide,
+  dbrtl,
+  dclib,
+  vclactnband,
+  vcl,
+  vcljpg,
+  vcldb,
+  inet,
+  VclSmp;
+
+contains
+  CROOperation in 'CROOperation.pas',
+  CROIDEReg in 'CROIDEReg.pas',
+  CROIDEEditors in 'CROIDEEditors.pas',
+  CROComponentsCommon in 'CROComponentsCommon.pas',
+  CROEdit in 'CROEdit.pas',
+  CROCheckbox in 'CROCheckbox.pas',
+  CROActions in 'CROActions.pas',
+  CROLookupCombo in 'CROLookupCombo.pas',
+  CROComboBox in 'CROComboBox.pas',
+  CROGrid in 'CROGrid.pas',
+  CROCustomCheckBox in 'CROCustomCheckBox.pas',
+  CROImage in 'CROImage.pas',
+  CROButton in 'CROButton.pas',
+  CROSkinImage in 'CROSkinImage.pas',
+  CROImageForm in 'CROImageForm.pas',
+  CROPictureSet in 'CROPictureSet.pas',
+  CROSkinProperties in 'CROSkinProperties.pas',
+  CROSkinControl in 'CROSkinControl.pas',
+  CROLabel in 'CROLabel.pas',
+  CROSpin in 'CROSpin.pas',
+  CROMemo in 'CROMemo.pas',
+  CRORadioButton in 'CRORadioButton.pas',
+  CROListBox in 'CROListBox.pas',
+  CRODateTimePicker in 'CRODateTimePicker.pas',
+  CROCustomDateTimePicker in 'CROCustomDateTimePicker.pas',
+  CROResourceContainer in 'CROResourceContainer.pas';
+
+end.
