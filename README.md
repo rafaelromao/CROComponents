@@ -28,8 +28,8 @@ var
   Customer: TCustomer;
 begin
   Customer := TCustomer.Create;
-  Customer.Name := Edit1.Text;
-  Customer.Email := Edit2.Text;
+  Customer.Name := edtName.Text;
+  Customer.Email := edtEmail.Text;
   
   Proxy := TROBinaryProxy.Create(MyService);
   try
@@ -46,12 +46,12 @@ end;
 // 1. Drop TCROServiceManager on form
 // 2. Set OperationForInsert to 'SaveCustomer'
 // 3. Bind controls via Expression property:
-//    - edit1.Expression = 'Customer.Name'
-//    - edit2.Expression = 'Customer.Email'
+//    - edtName.Expression = 'Customer.Name'
+//    - edtEmail.Expression = 'Customer.Email'
 // 4. Add btnSave with action = oaInsert
 
 // At runtime - just call Execute
-procedure TForm1.Button1Click(Sender: TObject);
+procedure TForm1.btnSaveClick(Sender: TObject);
 begin
   // UI automatically synced to operation parameters
   // Execute sends data to server
@@ -172,8 +172,8 @@ Each implements `ICROCustomControl` interface for value synchronization:
 Property binding via string expressions:
 ```pascal
 // Syntax: ComponentName.PropertyName
-Expression := 'editCustomer.Text'  // Binds to editCustomer's Text property
-Expression := 'gridOrders.Data'     // Binds to grid's data source
+Expression := 'edtCustomer.Text'  // Binds to edtCustomer's Text property
+Expression := 'grdOrders.Data'     // Binds to grid's data source
 ```
 
 Key functions:
