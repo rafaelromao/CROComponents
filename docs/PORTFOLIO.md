@@ -167,6 +167,102 @@ csBrowse → csEdit (user types) → Post → csBrowse
 - **Framework Design**: Extensible architecture with skin support
 - **Delphi Mastery**: RTTI, streaming, component editors, design-time registration
 
+## Value Proposition
+
+### What Problem Does It Solve?
+
+Building distributed applications with RemObjects Remoting SDK requires significant boilerplate code. Developers must manually:
+- Serialize parameters to binary messages
+- Handle transport channels and message formatting
+- Sync UI controls with remote data
+- Manage cursor-like navigation and state
+
+This library provides **data-aware controls** that work with remote services the same way native Delphi DB controls work with local datasets.
+
+### How It Works: A Developer's Perspective
+
+**Traditional RemObjects Client (without this library):**
+```pascal
+// Manual approach - lots of boilerplate
+var
+  Customer: TCustomer;
+begin
+  Customer := TCustomer.Create;
+  Customer.Name := Edit1.Text;
+  Customer.Email := Edit2.Text;
+  
+  Proxy := TROBinaryProxy.Create(MyService);
+  try
+    Proxy.SaveCustomer(Customer);
+  finally
+    Proxy.Free;
+  end;
+end;
+```
+
+**With CROComponents (data-aware approach):**
+```pascal
+// Configure once at design-time:
+// 1. Drop TCROServiceManager on form
+// 2. Set OperationForInsert to 'SaveCustomer'
+// 3. Bind controls via Expression property:
+//    - CROEdit1.Expression = 'Customer.Name'
+//    - CROEdit2.Expression = 'Customer.Email'
+// 4. Add CROButton with action = oaInsert
+
+// At runtime - just call Execute
+procedure TForm1.Button1Click(Sender: TObject);
+begin
+  // UI automatically synced to operation parameters
+  // Execute sends data to server
+  CROperation1.Execute;
+end;
+```
+
+### Usage Pattern
+
+1. **Setup Service Connection**
+   - Drop `TCROServiceManager` on form
+   - Configure `RORemoteService` with server URL/channel
+
+2. **Define Operations**
+   - Add `TCROOperation` components
+   - Set `OperationName` to remote method
+   - Configure parameters via `Params` collection or expressions
+
+3. **Create Data Handles**
+   - `TCROListHandle` - represents a list/table of records
+   - `TCROCursorHandle` - represents current record buffer
+
+4. **Bind UI Controls**
+   - Set control's `Properties.CursorHandle` to point to a cursor handle
+   - Set `Properties.Expression` to map field names
+   - Controls auto-sync: UI changes → cursor → remote operation
+
+5. **Execute Actions**
+   - Use `TCROOperationExecute` actions for Select/Insert/Update/Delete
+   - Or call `TCROOperation.Execute` directly
+
+### Comparison with Native Delphi Data Access
+
+| Native DB Components | CROComponents Equivalent |
+|---------------------|------------------------|
+| `TClientDataSet` | `TCROListHandle` + `TCROCursorHandle` |
+| `TDataSource` | `TCROProperties` (links control to handle) |
+| `TDBEdit` | `CROEdit` with `Expression` binding |
+| `TDBGrid` | `CROGrid` with column `Expression` |
+| `TDBNavigator` | `TCROOperationExecute` actions |
+| `TTable` / `TQuery` | `TCROOperation` (remote queries) |
+
+### Benefits
+
+- **Rapid Development**: Design-time binding similar to native data controls
+- **Decoupled UI**: Expression-based binding separates UI from data layer
+- **Consistent UX**: Same interaction patterns as native DB-aware controls
+- **Remote-Ready**: Full RPC capabilities without writing serialization code
+- **State Management**: Built-in cursor states (browse/edit/insert/cancel)
+- **Error Handling**: Centralized connection failure events
+
 ## Dependencies
 
 - `rtl` - Delphi runtime
