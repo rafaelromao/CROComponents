@@ -5,7 +5,12 @@
 CROComponents is a Delphi component library that bridges RemObjects Remotting (RPC) with VCL data-aware controls. It enables rapid development of distributed applications by binding UI controls directly to remote service operations.
 
 **Technology**: Delphi 7, [RemObjects Remoting SDK](https://www.remobjects.com/ro/)  
-**Purpose**: RPC client component library for building distributed applications
+**Created**: ~2005 (Delphi 7 era)  
+**Status**: This library is posted as a portfolio project only. It is not intended to be used in new projects and is no longer maintained.
+
+## License
+
+Creative Commons Attribution 4.0 International (CC BY 4.0) - See [LICENSE](LICENSE) file for details.
 
 ## Value Proposition
 
